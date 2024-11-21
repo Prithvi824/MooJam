@@ -53,7 +53,7 @@ class MooJamBot:
 
         # Send to user
         # TODO: Store the file id to a database
-        sent_msg = await message.answer_audio(audio_file, "Reecived a YT link", thumbnail=thumbnail)
+        sent_msg = await message.answer_audio(audio_file, thumbnail=thumbnail)
 
         # delete the message and clean local storage
         await message.delete()
@@ -78,7 +78,6 @@ class MooJamBot:
 
         # Send the keyboard and wait for reply
         await message.answer(f"Search results for <b><i>{message.text}</i></b>",parse_mode=ParseMode.HTML, reply_markup=keyboard, reply_to_message_id=message.message_id)
-        await message.delete()
 
     # Callback handler for button presses
     @staticmethod
