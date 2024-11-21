@@ -10,7 +10,7 @@ import json
 from aiogram.types import Message, FSInputFile, URLInputFile, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from aiogram.enums import ParseMode
 from .downloader import Downloader
-from .helpers.utils import check_valid_yt_url, youtube_search, split_string
+from .helpers.utils import check_valid_yt_url, youtube_search, split_string, generate_url_with_id
 from .config import MESSAGES_PATH, DOWNLOADS_DIR
 
 # Load the messages
@@ -51,9 +51,12 @@ class MooJamBot:
         audio_file = FSInputFile(download_details.path, file_with_ext)
         thumbnail = URLInputFile(download_details.thumbnail, filename=f"{file_name}.png")
 
-        # Send to user and clean local storage
+        # Send to user
         # TODO: Store the file id to a database
         sent_msg = await message.answer_audio(audio_file, "Reecived a YT link", thumbnail=thumbnail)
+
+        # delete the message and clean local storage
+        await message.delete()
         DOWNLOADER.clean_all()
 
     @staticmethod
@@ -75,13 +78,14 @@ class MooJamBot:
 
         # Send the keyboard and wait for reply
         await message.answer(f"Search results for <b><i>{message.text}</i></b>",parse_mode=ParseMode.HTML, reply_markup=keyboard, reply_to_message_id=message.message_id)
+        await message.delete()
 
     # Callback handler for button presses
     @staticmethod
     async def process_callback(callback_query: CallbackQuery):
         # Download the file
         vid_id = callback_query.data
-        url = f"https://www.youtube.com/watch?v={vid_id}"
+        url = generate_url_with_id(vid_id)
         download_details = await DOWNLOADER.download_async(url)
 
         # Upload the file to telegram servers and remove from local
@@ -90,8 +94,11 @@ class MooJamBot:
         audio_file = FSInputFile(download_details.path, file_with_ext)
         thumbnail = URLInputFile(download_details.thumbnail, filename=f"{file_name}.png")
 
-        # Send to user and clean local storage
+        # Send to user
         # TODO: Store the file id to a database
         sent_msg = await callback_query.bot.send_audio(callback_query.from_user.id, audio_file, thumbnail=thumbnail)
         await callback_query.answer()
+
+        # delete the message and clean local storage
+        await callback_query.bot.delete_message(callback_query.from_user.id, callback_query.message.message_id)
         DOWNLOADER.clean_all()
