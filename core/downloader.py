@@ -45,7 +45,6 @@ class Downloader():
         with YoutubeDL(self.config) as ydl:
             # Extract information and download
             info_dict = ydl.extract_info(yt_url, download=True)
-            print(info_dict)
             downloaded_path = ydl.prepare_filename(info_dict)
 
             # Add to the downloaded list

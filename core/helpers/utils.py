@@ -61,7 +61,6 @@ def youtube_search(query: str, max_results: int = 10) -> List[YtSearchResult]:
     # return the pydantic model with the top 10 results with url and title
     result = []
     for item in response.get("items", []):
-        print(f"res: {item}\n")
         result.append(YtSearchResult(
             video_id=item['id']['videoId'],
             title=item['snippet']['title']
