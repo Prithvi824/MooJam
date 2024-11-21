@@ -1,0 +1,4 @@
+{
+    "intro": "👋 Welcome to MooJam Bot! 🎵\nLooking for your favorite songs? Just send me the name of the song or a YouTube link, and I'll download it for you.\n\n💻 Created with ❤️ by [Prithvi Srivastava](https://prithvi824.github.io).",
+    "help": "🛠️ How to Use MooJam Bot:\n1. **Send a Song Name**:\n   - Example: `Shape of You`\n   - I'll search and send you the results!\n\n2. **Send a YouTube Link**:\n   - Example: `https://youtube.com/watch?v=dQw4w9WgXcQ`\n   - I'll download the audio from the video and send it to you.\n\n**Note:**\n- Please ensure the song or video is available publicly.\n- The video should not be more than 10 minutes long.\n\n💡 Need help or want to know more about me?\n Visit my portfolio: [Prithvi Srivastava](https://prithvi824.github.io)."
+}

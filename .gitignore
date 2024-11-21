@@ -1,0 +1,8 @@
+ffmpeg/
+Include/
+Lib/
+Scripts/
+.env
+__pycache__/
+downloads/
+pyvenv.cfg
